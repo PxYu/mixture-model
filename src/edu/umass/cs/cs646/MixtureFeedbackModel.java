@@ -8,7 +8,7 @@ import org.lemurproject.galago.core.index.stats.NodeStatistics;
 import org.lemurproject.galago.core.parse.stem.Stemmer;
 import org.lemurproject.galago.core.retrieval.Results;
 import org.lemurproject.galago.core.retrieval.Retrieval;
-import org.lemurproject.galago.core.retrieval.RetrievalFactory;
+//import org.lemurproject.galago.core.retrieval.RetrievalFactory;
 import org.lemurproject.galago.core.retrieval.ScoredDocument;
 import org.lemurproject.galago.core.retrieval.prf.ExpansionModel;
 import org.lemurproject.galago.core.retrieval.prf.WeightedTerm;
@@ -159,8 +159,9 @@ public class MixtureFeedbackModel implements ExpansionModel{
 
         // initial round
         for (String term: termCounts.keySet()){
+            System.out.println(term);
             // initiate weights map
-            double est = 1 / numTerms;
+            double est = 1.0 / numTerms;
             weights.put(term, est);
 
             // record termFreqs map
@@ -172,11 +173,14 @@ public class MixtureFeedbackModel implements ExpansionModel{
             termFreqs.put(term, termFreq);
 
             // record pwcs map
-            Node termNode = StructuredQuery.parse( "#text:" + term + ":part=field.text()");
-            termNode.getNodeParameters().set( "queryType", "count" );
-            NodeStatistics termStats = retrieval.getNodeStatistics( termNode );
-            long corpusTF = termStats.nodeFrequency; // Get the total frequency of the term in the text field
-            pwc = corpusTF / corpusLength;
+            Node node = StructuredQuery.parse("#text:" + term + ":part=lengths()" );
+//            Node node = StructuredQuery.parse(term);
+            node.getNodeParameters().set("queryType", "count");
+            node = retrieval.transformQuery(node, Parameters.create());
+
+            NodeStatistics stat = retrieval.getNodeStatistics(node);
+            long corpusTF = stat.nodeFrequency;
+            pwc = (double)corpusTF / corpusLength;
             pwcs.put(term, pwc);
 
             // initial ps map
@@ -221,7 +225,7 @@ public class MixtureFeedbackModel implements ExpansionModel{
     public boolean convergence(Map<String, Double> a, Map<String, Double> b) {
         for (Map.Entry<String, Double> entry: a.entrySet()){
             if (Math.abs(b.get(entry.getKey())-entry.getValue()) < 0.0001){
-                continue;
+
             } else {
                 return false;
             }

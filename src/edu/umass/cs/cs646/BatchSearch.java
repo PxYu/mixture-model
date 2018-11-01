@@ -24,12 +24,12 @@ import org.lemurproject.galago.utility.Parameters;
 public class BatchSearch {
     
     public static void main(String[] args) throws Exception{
-//        String indexPath = "/home/pxyu/Documents/github/646-hw2/robust04-complete-index/";
-//        String outputFileName = "/home/pxyu/Documents/github/646-hw2/search_results/mm.txt";
-//        String queryFileName = "/home/pxyu/Documents/github/646-hw2/query.titles.tsv";
-        String indexPath = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\robust04-complete-index\\";
-        String outputFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\search_results\\mm.txt";
-        String queryFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\query.titles.tsv";
+        String indexPath = "/home/pxyu/Documents/github/646-hw2/robust04-complete-index";
+        String outputFileName = "/home/pxyu/Documents/github/646-hw2/search_results/mm.txt";
+        String queryFileName = "/home/pxyu/Documents/github/646-hw2/query.titles.tsv";
+//        String indexPath = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\robust04-complete-index\\";
+//        String outputFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\search_results\\mm.txt";
+//        String queryFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\query.titles.tsv";
         new BatchSearch().retrieve(indexPath, outputFileName, queryFileName);
     }
 
@@ -82,7 +82,6 @@ public class BatchSearch {
                     ex.printStackTrace();
                 }
             }
-            
 //            System.err.println(transformed.toPrettyString()); // This can be used to print the final query in the Galago language.
             // run query
             List<ScoredDocument> results = retrieval.executeQuery(transformed, query).scoredDocuments;
@@ -93,11 +92,12 @@ public class BatchSearch {
         resultWriter.close();
     }
 
-    public static Reader getFile(String relativePath) {
+    public static Reader getFile(String path) {
         try {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(relativePath));
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(path));
             return reader;
         } catch (FileNotFoundException e) {
+            //
         }
         return null;
     }
