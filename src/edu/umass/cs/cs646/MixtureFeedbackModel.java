@@ -138,26 +138,103 @@ public class MixtureFeedbackModel implements ExpansionModel{
     public List <WeightedTerm> computeWeights (FeedbackData feedbackData, Parameters fbParam, Parameters queryParameters, Set <String> queryTerms) throws Exception{
 //        throw new Exception ("This should be implemented! This method outputs a list of terms with weights.");
         Retrieval retrieval = this.retrieval;
-        Map<String, Map<ScoredDocument, Integer>> termCounts = new HashMap<>();
+        Map<String, Map<ScoredDocument, Integer>> termCounts = feedbackData.termCounts;
 
         Node fieldNode = StructuredQuery.parse("#lengths:text:part=lengths()");
-        FieldStatistics fieldStats = retrieval.getCollectionStatistics( fieldNode );
+        FieldStatistics fieldStats = retrieval.getCollectionStatistics(fieldNode);
         long corpusLength = fieldStats.collectionLength;
         double pwc = 0;
 
         retrieval.close();
         int numTerms = termCounts.size();
-        // iterate terms in feedback docs
+
+        //non-static maps
+        Map<String, Double> weights = new HashMap<>();
+        Map<String, Double> nextWeights = new HashMap<>();
+        Map<String, Double> ps = new HashMap<>();
+
+        //static maps
+        Map<String, Integer> termFreqs = new HashMap<>();
+        Map<String, Double> pwcs = new HashMap<>();
+
+        // initial round
         for (String term: termCounts.keySet()){
-            // for each term
+            // initiate weights map
+            double est = 1 / numTerms;
+            weights.put(term, est);
+
+            // record termFreqs map
+            int termFreq = 0;
+            Map<ScoredDocument, Integer> tmap = termCounts.get(term);
+            for (Map.Entry<ScoredDocument, Integer> entry : tmap.entrySet()) {
+                termFreq += entry.getValue();
+            }
+            termFreqs.put(term, termFreq);
+
+            // record pwcs map
             Node termNode = StructuredQuery.parse( "#text:" + term + ":part=field.text()");
             termNode.getNodeParameters().set( "queryType", "count" );
             NodeStatistics termStats = retrieval.getNodeStatistics( termNode );
             long corpusTF = termStats.nodeFrequency; // Get the total frequency of the term in the text field
             pwc = corpusTF / corpusLength;
-            // initial est is average
-            double est = 1 / numTerms;
-            double p = est / (est + pwc);
+            pwcs.put(term, pwc);
+
+            // initial ps map
+            double p = est / est + pwc;
+            ps.put(term, p);
+
+            // compute nextWeights map
+            double ttl = 0.0;
+            for (Map.Entry<String, Double> entry: ps.entrySet()){
+                ttl += termFreqs.get(entry.getKey()) * entry.getValue();
+            }
+            double newWeight = (termFreq * p) / ttl;
+            nextWeights.put(term, newWeight);
         }
+
+        while (!convergence(weights, nextWeights)) {
+
+            weights = nextWeights;
+
+            for (String term: termCounts.keySet()){
+                // update ps
+                double weight = weights.get(term);
+                double p = weight / (weight + pwcs.get(term));
+                ps.put(term, p);
+            }
+
+            for (String term: termCounts.keySet()){
+                // update newWeights
+                double ttl = 0.0;
+                int termFreq = termFreqs.get(term);
+                for (Map.Entry<String, Double> entry: ps.entrySet()){
+                    ttl += termFreqs.get(entry.getKey()) * entry.getValue();
+                }
+                double newWeight = (termFreq * ps.get(term)) / ttl;
+                nextWeights.put(term, newWeight);
+            }
+        }
+
+        return convert(nextWeights);
+    }
+
+    public boolean convergence(Map<String, Double> a, Map<String, Double> b) {
+        for (Map.Entry<String, Double> entry: a.entrySet()){
+            if (Math.abs(b.get(entry.getKey())-entry.getValue()) < 0.0001){
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List <WeightedTerm> convert(Map<String, Double> weights) {
+        List <WeightedTerm> res = new LinkedList<>();
+        for (String t: weights.keySet()){
+            WeightedTerm wt = new WeightedUnigram(t, weights.get(t));
+            res.add(wt);
+        }
+        return res;
     }
 }
