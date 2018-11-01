@@ -24,9 +24,12 @@ import org.lemurproject.galago.utility.Parameters;
 public class BatchSearch {
     
     public static void main(String[] args) throws Exception{
-        String indexPath = "/home/pxyu/Documents/github/646-hw2/robust04-complete-index/";
-        String outputFileName = "/home/pxyu/Documents/github/646-hw2/search_results/mm.txt";
-        String queryFileName = "/home/pxyu/Documents/github/646-hw2/query.titles.tsv";
+//        String indexPath = "/home/pxyu/Documents/github/646-hw2/robust04-complete-index/";
+//        String outputFileName = "/home/pxyu/Documents/github/646-hw2/search_results/mm.txt";
+//        String queryFileName = "/home/pxyu/Documents/github/646-hw2/query.titles.tsv";
+        String indexPath = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\robust04-complete-index\\";
+        String outputFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\search_results\\mm.txt";
+        String queryFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\query.titles.tsv";
         new BatchSearch().retrieve(indexPath, outputFileName, queryFileName);
     }
 
