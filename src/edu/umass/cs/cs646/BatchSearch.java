@@ -1,5 +1,11 @@
 package edu.umass.cs.cs646;
 
+import com.univocity.parsers.tsv.*;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import org.lemurproject.galago.core.retrieval.Retrieval;
@@ -18,22 +24,28 @@ import org.lemurproject.galago.utility.Parameters;
 public class BatchSearch {
     
     public static void main(String[] args) throws Exception{
-        String indexPath = "path-to-index";
-        String outputFileName = "path-to-output-file";
-        new BatchSearch().retrieve(indexPath, outputFileName);
+        String indexPath = "/home/pxyu/Documents/github/646-hw2/robust04-complete-index/";
+        String outputFileName = "/home/pxyu/Documents/github/646-hw2/search_results/mm.txt";
+        String queryFileName = "/home/pxyu/Documents/github/646-hw2/query.titles.tsv";
+        new BatchSearch().retrieve(indexPath, outputFileName, queryFileName);
     }
 
-    public void retrieve(String indexPath, String outputFileName) throws Exception {
+    public void retrieve(String indexPath, String outputFileName, String queryFileName) throws Exception {
         int requested = 1000; // number of documents to retrieve
         boolean append = false;
         boolean queryExpansion = true;
         // open index
         Retrieval retrieval = RetrievalFactory.instance(indexPath, Parameters.create());
-        
+
         // load queries
+        TsvParser parser = new TsvParser(new TsvParserSettings());
+        List<String[]> queriesFile = parser.parseAll(getFile(queryFileName));
         List <Parameters> queries = new ArrayList <> ();
-        queries.add(Parameters.parseString(String.format("{\"number\":\"%s\", \"text\":\"%s\"}", "301", "International Organized Crime")));
-        
+
+        for (String[] line: queriesFile){
+            queries.add(Parameters.parseString(String.format("{\"number\":\"%s\", \"text\":\"%s\"}", line[0], line[1])));
+        }
+
         // open output file
         ResultWriter resultWriter = new ResultWriter(outputFileName, append);
 
@@ -53,12 +65,14 @@ public class BatchSearch {
             // Query Expansion
             if (queryExpansion){
                 // This query expansion technique can be replaced by other approaches.
-                ExpansionModel qe = new org.lemurproject.galago.core.retrieval.prf.RelevanceModel3(retrieval);
-//                ExpansionModel qe = new MixtureFeedbackModel(retrieval);
+                //ExpansionModel qe = new org.lemurproject.galago.core.retrieval.prf.RelevanceModel3(retrieval);
+               ExpansionModel qe = new MixtureFeedbackModel(retrieval);
 
                 try{
                     query.set("fbOrigWeight", 0.5);
-                    query.set("fbTerm", 100.0);
+                    query.set("fbDocs", 10.0);
+                    query.set("fbTerm", 50.0);
+                    query.set("lambda", 0.5);
                     Node expandedQuery = qe.expand(root.clone(), query.clone());  
                     transformed = retrieval.transformQuery(expandedQuery, query);
                 } catch (Exception ex){
@@ -74,5 +88,14 @@ public class BatchSearch {
             resultWriter.write(queryNumber, results);
         }
         resultWriter.close();
+    }
+
+    public static Reader getFile(String relativePath) {
+        try {
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(relativePath));
+            return reader;
+        } catch (FileNotFoundException e) {
+        }
+        return null;
     }
 }

@@ -140,7 +140,7 @@ public class MixtureFeedbackModel implements ExpansionModel{
         Retrieval retrieval = this.retrieval;
         Map<String, Map<ScoredDocument, Integer>> termCounts = feedbackData.termCounts;
 
-        Node fieldNode = StructuredQuery.parse("#lengths:text:part=lengths()");
+        Node fieldNode = StructuredQuery.parse("#lengths:document:part=lengths()");
         FieldStatistics fieldStats = retrieval.getCollectionStatistics(fieldNode);
         long corpusLength = fieldStats.collectionLength;
         double pwc = 0;
