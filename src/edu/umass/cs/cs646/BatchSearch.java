@@ -28,7 +28,7 @@ public class BatchSearch {
 //        String outputFileName = "/home/pxyu/Documents/github/646-hw2/search_results/mm.txt";
 //        String queryFileName = "/home/pxyu/Documents/github/646-hw2/query.titles.tsv";
         String indexPath = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\robust04-complete-index\\";
-        String outputFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\search_results\\mm.txt";
+        String outputFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\search_results\\mm_smoothed.res";
         String queryFileName = "C:\\Users\\Puxuan Yu\\Documents\\GitHub\\646-hw2\\query.titles.tsv";
         new BatchSearch().retrieve(indexPath, outputFileName, queryFileName);
     }
@@ -61,6 +61,8 @@ public class BatchSearch {
             logger.info("Processing query #" + queryNumber + ": " + queryText);
             
             query.set("requested", requested);
+            query.set("scorer", "dirichlet");
+            query.set("mu", 1000);
 
             Node root = StructuredQuery.parse(queryText);
             Node transformed = retrieval.transformQuery(root, query);
