@@ -145,7 +145,6 @@ public class MixtureFeedbackModel implements ExpansionModel{
         long corpusLength = fieldStats.collectionLength;
         double pwc = 0;
 
-        retrieval.close();
         int numTerms = termCounts.size();
 
         //non-static maps
@@ -159,7 +158,6 @@ public class MixtureFeedbackModel implements ExpansionModel{
 
         // initial round
         for (String term: termCounts.keySet()){
-            System.out.println(term);
             // initiate weights map
             double est = 1.0 / numTerms;
             weights.put(term, est);
@@ -173,8 +171,7 @@ public class MixtureFeedbackModel implements ExpansionModel{
             termFreqs.put(term, termFreq);
 
             // record pwcs map
-            Node node = StructuredQuery.parse("#text:" + term + ":part=lengths()" );
-//            Node node = StructuredQuery.parse(term);
+            Node node = StructuredQuery.parse(term);
             node.getNodeParameters().set("queryType", "count");
             node = retrieval.transformQuery(node, Parameters.create());
 

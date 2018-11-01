@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d8be7f2-9a06-43bf-a413-cc0db29aa92e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/mixture_model/edu/umass/cs/cs646/BatchSearch.class" afterPath="$PROJECT_DIR$/out/production/mixture_model/edu/umass/cs/cs646/BatchSearch.class" />
-      <change beforePath="$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java" afterPath="$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java" />
+      <change beforePath="$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,43 +16,54 @@
     <session id="-1860424777">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="class" value="3" />
           <entry key="java" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="CLASS" value="3" />
           <entry key="JAVA" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="851" />
+          <entry key="java" value="858" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="851" />
+          <entry key="JAVA" value="858" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
+<<<<<<< HEAD
       <file leaf-file-name="BatchSearch.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="720">
               <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="31" selection-end-column="100" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
+>>>>>>> 57b1000dbfef02158292e2436cc5e7513f5e99f5
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,11 +81,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="MixtureFeedbackModel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/MixtureFeedbackModel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-2124">
               <caret line="28" column="20" lean-forward="true" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/MixtureFeedbackModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1450">
+              <caret line="174" column="6" selection-start-line="174" selection-start-column="6" selection-end-line="174" selection-end-column="6" />
+>>>>>>> 57b1000dbfef02158292e2436cc5e7513f5e99f5
               <folding>
                 <element signature="method#convert#0;class#MixtureFeedbackModel#0" expanded="false" />
               </folding>
@@ -103,6 +120,8 @@
       <find>document</find>
       <find>t</find>
       <find>interpolate</find>
+      <find>system</find>
+      <find>1000</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -400,6 +419,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
@@ -422,8 +442,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2124">
           <caret line="28" column="20" lean-forward="true" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/MixtureFeedbackModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1450">
+          <caret line="174" column="6" selection-start-line="174" selection-start-column="6" selection-end-line="174" selection-end-column="6" />
+>>>>>>> 57b1000dbfef02158292e2436cc5e7513f5e99f5
           <folding>
             <element signature="method#convert#0;class#MixtureFeedbackModel#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Documents/galago-3.14-bin/lib/core-3.14.jar!/org/lemurproject/galago/core/retrieval/prf/RelevanceModel1.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="231" selection-start-line="231" selection-end-line="231" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Documents/galago-3.14-bin/lib/core-3.14.jar!/org/lemurproject/galago/core/retrieval/prf/RelevanceModel3.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/edu/umass/cs/cs646/BatchSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

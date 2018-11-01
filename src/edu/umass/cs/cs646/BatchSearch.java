@@ -69,7 +69,7 @@ public class BatchSearch {
             if (queryExpansion){
                 // This query expansion technique can be replaced by other approaches.
                 //ExpansionModel qe = new org.lemurproject.galago.core.retrieval.prf.RelevanceModel3(retrieval);
-               ExpansionModel qe = new MixtureFeedbackModel(retrieval);
+                ExpansionModel qe = new MixtureFeedbackModel(retrieval);
 
                 try{
                     query.set("fbOrigWeight", 0.5);
